@@ -4,7 +4,6 @@ import React from 'react';
 import { useState } from 'react';
 import { FaDumbbell } from 'react-icons/fa';
 import { IoIosMenu } from 'react-icons/io';
-import { LuDumbbell } from 'react-icons/lu';
 import { RxCross2 } from 'react-icons/rx';
 
 export default function Navbar() {
