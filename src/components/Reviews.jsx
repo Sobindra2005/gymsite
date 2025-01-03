@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-
+import Image from 'next/image';
 export default function Reviews() {
     const [images, setImages] = useState([]);
     const scrollContainerRef = useRef(null);
@@ -34,7 +34,7 @@ export default function Reviews() {
                 </div>
                 <div className="relative">
                     <button
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                        className="absolute z-50 left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
                         onClick={() => scroll('left')}
                     >
                         <BiLeftArrow size={24} />
@@ -44,11 +44,14 @@ export default function Reviews() {
                         className="flex overflow-x-auto space-x-4 no-scrollbar  "
                     >
                         {images.map((image, index) => (
-                            <div key={index} className="flex-shrink-0 w-64 h-64">
-                                <img
+                            <div key={index} className="flex-shrink-0 relative w-64 h-64">
+                               
+                                <Image
                                     src={image}
                                     alt={`Gallery image ${index + 1}`}
                                     className="w-full h-full object-cover rounded-lg"
+                                    layout="fill"
+                                    objectFit="cover"
                                 />
                             </div>
                         ))}

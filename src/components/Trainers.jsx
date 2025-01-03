@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function Trainers() {
     const [trainers, setTrainers] = useState([]);
@@ -30,11 +31,13 @@ export default function Trainers() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {trainers.map((trainer, index) => (
                         <div key={index} className="bg-gray-50 border border-gray-300 rounded-lg overflow-hidden">
-                            <div className='h-[16rem] overflow-hidden'>
-                                <img
+                            <div className='h-[16rem] relative overflow-hidden'>
+                                <Image
                                     src={trainer.image}
                                     alt={trainer.name}
-                                    className="w-full h-full object-cover object-center hover:scale-125 transition-transform duration-200 ease-in"
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="hover:scale-125 transition-transform duration-200 ease-in"
                                 />
                             </div>
                             <div className="p-4">
