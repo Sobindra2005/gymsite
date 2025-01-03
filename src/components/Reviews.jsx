@@ -1,11 +1,20 @@
 "use client"
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-import ReviewCard from './cards/ReviewCard';
-import { reviews } from './cards/ReviewData';
 
 export default function Reviews() {
-    const scrollContainerRef = useRef (null);
+    const [images, setImages] = useState([]);
+    const scrollContainerRef = useRef(null);
+
+    useEffect(() => {
+        const fetchGalleryData = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries`);
+            const data = await response.json();
+            setImages(data.data[0].images);
+        };
+
+        fetchGalleryData();
+    }, []);
 
     const scroll = (direction) => {
         if (scrollContainerRef.current) {
@@ -18,49 +27,37 @@ export default function Reviews() {
     };
 
     return (
-        <section id='reviews' className="py-24 bg-gray-50">
+        <section id='gallery' className="py-16 bg-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Member Reviews</h2>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        See what our members have to say about their experience at FitLife Gym.
-                    </p>
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-bold text-gray-900">Gallery</h2>
                 </div>
-
-                <div className="relative flex items-center justify-center">
+                <div className="relative">
                     <button
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
                         onClick={() => scroll('left')}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
-                        aria-label="Scroll left"
                     >
-                        <BiLeftArrow className="h-6 w-6 text-gray-600" />
+                        <BiLeftArrow size={24} />
                     </button>
-
                     <div
                         ref={scrollContainerRef}
-                        className="flex overflow-x-auto gap-6 pb-8 px-4 snap-x snap-mandatory scrollbar-hide"
-                        style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
-                            WebkitOverflowScrolling: 'touch'
-                        }}
+                        className="flex overflow-x-auto space-x-4 no-scrollbar  "
                     >
-                        {reviews.map((review, index) => (
-                            <div
-                                key={index}
-                                className="flex-none w-full sm:w-[calc(100%-2rem)] md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] snap-start"
-                            >
-                                <ReviewCard {...review} />
+                        {images.map((image, index) => (
+                            <div key={index} className="flex-shrink-0 w-64 h-64">
+                                <img
+                                    src={image}
+                                    alt={`Gallery image ${index + 1}`}
+                                    className="w-full h-full object-cover rounded-lg"
+                                />
                             </div>
                         ))}
                     </div>
-
                     <button
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
                         onClick={() => scroll('right')}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white p-2 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
-                        aria-label="Scroll right"
                     >
-                        <BiRightArrow className="h-6 w-6 text-gray-600" />
+                        <BiRightArrow size={24} />
                     </button>
                 </div>
             </div>

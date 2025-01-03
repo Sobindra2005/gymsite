@@ -21,9 +21,9 @@ export default function Navbar() {
                     <div className="hidden md:flex space-x-8">
                         <NavLink href="#home">Home</NavLink>
                         <NavLink href="#pricing">Pricing</NavLink>
+                        <NavLink href="#Service&facilities">Service & Facilities</NavLink>
                         <NavLink href="#trainers">Trainers</NavLink>
-                        <NavLink href="#reviews">Reviews</NavLink>
-                        <NavLink href="#contact">Contact</NavLink>
+                        <NavLink href="#gallery">gallery</NavLink>
                     </div>
                     <div className="md:hidden">
                         <button

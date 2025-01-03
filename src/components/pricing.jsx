@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiCheck } from 'react-icons/bi';
 
 
@@ -39,6 +39,21 @@ const plans = [
 
 export default function Pricing() {
     const [currentPlan, setCurrentPlan] = useState('Pro');
+    const [plans, setPlans] = useState([]);
+    const [description, setDescription] = useState('');
+    
+
+    useEffect(() => {
+        const fetchPricingData = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/memberships`);
+            const data = await response.json();
+            setDescription(data.data[0].description);
+            setPlans(data.data[0].Details);
+        };
+
+        fetchPricingData();
+    }, []);
+
     return (
         <section id="pricing" className={'py-24 bg-gray-50'}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
