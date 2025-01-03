@@ -27,7 +27,7 @@ const Hero = () => {
     if (!!datas || !!imageSrc)
         return (
             <Suspense fallback={<div className='w-full h-screen flex items-center justify-center text-black text-2xl '>Loading...</div>}>
-                <section className="relative h-screen">
+                <section id='home' className="relative h-screen">
                     {imageSrc && (
                         <Image
                             src={imageSrc}
