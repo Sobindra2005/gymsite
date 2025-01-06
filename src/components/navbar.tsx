@@ -19,8 +19,8 @@ export default function Navbar() {
                     </div>
                     <div className="hidden md:flex space-x-8">
                         <NavLink href="#home">Home</NavLink>
-                        <NavLink href="#pricing">Pricing</NavLink>
                         <NavLink href="#Service&facilities">Service & Facilities</NavLink>
+                        <NavLink href="#pricing">Pricing</NavLink>
                         <NavLink href="#trainers">Trainers</NavLink>
                         <NavLink href="#gallery">gallery</NavLink>
                     </div>

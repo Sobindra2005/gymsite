@@ -90,7 +90,7 @@ const Features = async () => {
   // }, []);
 
   return (
-    <section className="py-16 text-black bg-gray-100">
+    <section id="Service&facilities" className="py-16 text-black bg-gray-100">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-6">Why Choose FitLife?</h2>
         <p className="text-gray-600 w-full text-center mb-12">
