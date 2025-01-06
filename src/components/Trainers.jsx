@@ -1,22 +1,44 @@
-"use client";
 
-import React, { useEffect, useState } from 'react';
+import imageUrlBuilder from "@sanity/image-url";
+import React from 'react';
 import Image from 'next/image';
+import { client } from "@/sanity/client";
 
-export default function Trainers() {
-    const [trainers, setTrainers] = useState([]);
-    const [description, setDescription] = useState('');
+const POSTS_QUERY = `*[_type == "trainers"] {
+  name,
+  speciality,
+  image,
+}`;
 
-    useEffect(() => {
-        const fetchTrainersData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/expert-trainers`);
-            const data = await response.json();
-            setDescription(data.data[0].description);
-            setTrainers(data.data[0].data);
-        };
+const options = { next: { revalidate: 30 } };
+const { projectId, dataset } = client.config();
 
-        fetchTrainersData();
-    }, []);
+
+// const sampleTrainers = [
+//     {
+//         name: "Alice Johnson",
+//         specialty: "Yoga & Pilates",
+//         image: "/images/trainers/mark-brown.jpg",
+//     },
+//     {
+//         name: "Mark Brown",
+//         specialty: "HIIT & Weightlifting",
+//         image: "/images/trainers/mark-brown.jpg",
+//     },
+//     {
+//         name: "Sarah Lee",
+//         specialty: "Cardio & Aerobics",
+//         image: "/images/trainers/sarah-lee.jpg",
+//     },
+//     {
+//         name: "David Smith",
+//         specialty: "Strength Training & CrossFit",
+//         image: "/images/trainers/david-smith.jpg",
+//     }
+// ];
+export default async function Trainers() {
+
+const Response = await client.fetch(POSTS_QUERY, {}, options);
 
     return (
         <section id="trainers" className="py-24 bg-white">
@@ -24,16 +46,15 @@ export default function Trainers() {
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">Expert Trainers</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        {description}
+                        {"Meet our expert trainers who are here to guide you on your fitness journey."}
                     </p>
                 </div>
-
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {trainers.map((trainer, index) => (
+                    {Response.map((trainer, index) => (
                         <div key={index} className="bg-gray-50 border border-gray-300 rounded-lg overflow-hidden">
                             <div className='h-[16rem] relative overflow-hidden'>
                                 <Image
-                                    src={trainer.image}
+                                    src={`${imageUrlBuilder({ projectId, dataset }).image(trainer.image).url()}`}
                                     alt={trainer.name}
                                     layout="fill"
                                     objectFit="cover"
@@ -45,8 +66,12 @@ export default function Trainers() {
                                 <p className="text-gray-600">{trainer.specialty}</p>
                             </div>
                         </div>
+
                     ))}
                 </div>
+
+
+
             </div>
         </section>
     );

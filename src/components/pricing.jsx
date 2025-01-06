@@ -1,54 +1,63 @@
-"use client";
+"use client"
+
+
+// const planData = [
+//     {
+//         name: 'Basic',
+//         price: '699',
+//         features: [
+//             'Access to gym facilities',
+//             'Basic equipment usage',
+//             'Locker room access',
+//             '2 group classes/month'
+//         ]
+//     },
+//     {
+//         name: 'Pro',
+//         price: '999',
+//         features: [
+//             'All Basic features',
+//             'Unlimited group classes',
+//             'Personal trainer (2x/month)',
+//             'Nutrition consultation'
+//         ],
+//         popular: true
+//     },
+//     {
+//         name: 'Elite',
+//         price: '1599',
+//         features: [
+//             'All Pro features',
+//             'Unlimited personal training',
+//             'Premium equipment access',
+//             'Spa & massage services'
+//         ]
+//     }
+// ];
+
+
 import React, { useEffect, useState } from 'react';
 import { BiCheck } from 'react-icons/bi';
+import { client } from "@/sanity/client";
 
+const POSTS_QUERY = `*[_type == "pricing"] | order(price asc) {
+  name,
+  price,
+  features,
+  isPopular
+}`;
 
-const plans = [
-    {
-        name: 'Basic',
-        price: '699',
-        features: [
-            'Access to gym facilities',
-            'Basic equipment usage',
-            'Locker room access',
-            '2 group classes/month'
-        ]
-    },
-    {
-        name: 'Pro',
-        price: '999',
-        features: [
-            'All Basic features',
-            'Unlimited group classes',
-            'Personal trainer (2x/month)',
-            'Nutrition consultation'
-        ],
-        popular: true
-    },
-    {
-        name: 'Elite',
-        price: '1599',
-        features: [
-            'All Pro features',
-            'Unlimited personal training',
-            'Premium equipment access',
-            'Spa & massage services'
-        ]
-    }
-];
+const options = { next: { revalidate: 30 } };
 
 export default function Pricing() {
+
+    const [Response, setResponse] = useState([])
     const [currentPlan, setCurrentPlan] = useState('Pro');
-    const [plans, setPlans] = useState([]);
-    const [description, setDescription] = useState('');
-    
 
     useEffect(() => {
         const fetchPricingData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/memberships`);
-            const data = await response.json();
-            setDescription(data.data[0].description);
-            setPlans(data.data[0].Details);
+            const response = await client.fetch(POSTS_QUERY, {}, options);
+            setResponse(response)
         };
 
         fetchPricingData();
@@ -65,14 +74,14 @@ export default function Pricing() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
-                    {plans.map((plan, index) => (
+                    {Response.map((plan, index) => (
                         <div
                             onClick={() => setCurrentPlan(`${plan.name}`)}
                             key={index}
                             className={`bg-white rounded-lg p-8 ${currentPlan === plan.name ? 'ring-2 ring-purple-600 shadow-lg' : ''
                                 }`}
                         >
-                            {plan.popular && (
+                            {plan.isPopular && (
                                 <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                                     Most Popular
                                 </span>

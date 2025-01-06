@@ -2,20 +2,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import Image from 'next/image';
+import { client } from '@/sanity/client';
+import imageUrlBuilder from "@sanity/image-url";
+
+const POSTS_QUERY = `*[_type == "gallery"] {image,}`;
+
+const options = { next: { revalidate: 30 } };
+const { projectId, dataset } = client.config();
+
+
 export default function Reviews() {
-    const [images, setImages] = useState([]);
+    const [Response, setResponse] = useState([])
     const scrollContainerRef = useRef(null);
-
-    useEffect(() => {
-        const fetchGalleryData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries`);
-            const data = await response.json();
-            setImages(data.data[0].images);
-        };
-
-        fetchGalleryData();
-    }, []);
-
     const scroll = (direction) => {
         if (scrollContainerRef.current) {
             const scrollAmount = 500;
@@ -25,6 +23,13 @@ export default function Reviews() {
             });
         }
     };
+    useEffect(() => {
+        async function Fetchdata() {
+            const response = await client.fetch(POSTS_QUERY, {}, options);
+            setResponse(response)
+        }
+        Fetchdata();
+    })
 
     return (
         <section id='gallery' className="py-16 bg-gray-100">
@@ -43,11 +48,11 @@ export default function Reviews() {
                         ref={scrollContainerRef}
                         className="flex overflow-x-auto space-x-4 no-scrollbar  "
                     >
-                        {images.map((image, index) => (
+                        {Response.map((image, index) => (
                             <div key={index} className="flex-shrink-0 relative w-64 h-64">
-                               
+
                                 <Image
-                                    src={image}
+                                    src={imageUrlBuilder({ projectId, dataset }).image(image.image).url() || null}
                                     alt={`Gallery image ${index + 1}`}
                                     className="w-full h-full object-cover rounded-lg"
                                     layout="fill"
