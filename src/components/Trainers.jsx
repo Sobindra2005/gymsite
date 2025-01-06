@@ -63,7 +63,7 @@ const Response = await client.fetch(POSTS_QUERY, {}, options);
                             </div>
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold mb-2 text-gray-900 ">{trainer.name}</h3>
-                                <p className="text-gray-600">{trainer.specialty}</p>
+                                <p className="text-gray-600">{trainer.speciality}</p>
                             </div>
                         </div>
 
