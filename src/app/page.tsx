@@ -6,7 +6,6 @@ import Pricing from "@/components/pricing";
 import Trainer from "@/components/Trainers";
 import Footer from "@/components/footer";
 import Reviews from "@/components/Reviews"
-import ServiceAndFacilities from "@/components/serviceAndFacilities";
 import Location from "@/components/location";
 export default function Home() {
   return (
