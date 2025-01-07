@@ -72,10 +72,10 @@ const Hero = () => {
 
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center h-full justify-center">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{
-                                duration: 0.3,
+                                duration: 0.5,
                                 delay: 0.5,
                                 ease: ["linear"]
                             }} className="text-center text-white">

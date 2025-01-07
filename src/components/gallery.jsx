@@ -14,9 +14,9 @@ const { projectId, dataset } = client.config();
 export default function Gallery() {
     const [Response, setResponse] = useState([])
     const scrollContainerRef = useRef(null);
-    const scroll = (direction) => {
+    const scroll = (direction, length) => {
         if (scrollContainerRef.current) {
-            const scrollAmount = 500;
+            const scrollAmount = scrollContainerRef.current.clientWidth;
             scrollContainerRef.current.scrollBy({
                 left: direction === 'left' ? -scrollAmount : scrollAmount,
                 behavior: 'smooth'
@@ -32,37 +32,41 @@ export default function Gallery() {
     })
 
     return (
-        <section id='gallery' className="py-16 bg-gray-100">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id='gallery' className="py-16  bg-gray-100">
+            <div className="max-w-7xl mx-auto px-4  sm:px-6 lg:px-8">
                 <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold text-gray-900">Gallery</h2>
                 </div>
-                <div className="relative">
+                <div className='relative'>
                     <button
-                        className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                        className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2  text-gray-800  rounded-full"
                         onClick={() => scroll('left')}
                     >
                         <BiLeftArrow size={24} />
                     </button>
-                    <div
-                        ref={scrollContainerRef}
-                        className="flex overflow-x-auto space-x-4  cursor-grab no-scrollbar  "
-                    >
-                        {Response.map((image, index) => (
-                            <div key={index} className="flex-shrink-0 relative rounded-lg overflow-hidden  w-64 h-64">
-              
-                                <Image
-                                    src={imageUrlBuilder({ projectId, dataset }).image(image.image).url() || null}
-                                    alt={`Gallery image ${index + 1}`}
-                                    className="w-full h-full object-cover object-center transition-transform ease-in duration-250 hover:scale-110  "
-                                    layout="fill"
-                                    objectFit="cover"
-                                />
-                            </div>
-                        ))}
+                    <div>
+
+                        <div
+                            ref={scrollContainerRef}
+                            className="flex overflow-x-auto space-x-4  cursor-grab no-scrollbar  "
+                        >
+                            {Response.map((image, index) => (
+                                <div key={index} className="flex-shrink-0 relative rounded-lg overflow-hidden  w-64 h-64">
+
+                                    <Image
+                                        src={imageUrlBuilder({ projectId, dataset }).image(image.image).url() || null}
+                                        alt={`Gallery image ${index + 1}`}
+                                        className="w-full h-full object-cover object-center transition-transform ease-in duration-250 hover:scale-110  "
+                                        layout="fill"
+                                        objectFit="cover"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
                     </div>
                     <button
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2  text-gray-800 p-2 rounded-full"
                         onClick={() => scroll('right')}
                     >
                         <BiRightArrow size={24} />
