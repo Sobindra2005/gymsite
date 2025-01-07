@@ -16,7 +16,8 @@ export default function Gallery() {
     const scrollContainerRef = useRef(null);
     const scroll = (direction, length) => {
         if (scrollContainerRef.current) {
-            const scrollAmount = scrollContainerRef.current.clientWidth;
+            const totalwidth = scrollContainerRef.current.scrollWidth;
+            const scrollAmount = totalwidth / length;
             scrollContainerRef.current.scrollBy({
                 left: direction === 'left' ? -scrollAmount : scrollAmount,
                 behavior: 'smooth'
@@ -40,7 +41,7 @@ export default function Gallery() {
                 <div className='relative'>
                     <button
                         className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2  text-gray-800  rounded-full"
-                        onClick={() => scroll('left')}
+                        onClick={() => scroll('left', Response.length)}
                     >
                         <BiLeftArrow size={24} />
                     </button>
@@ -48,10 +49,10 @@ export default function Gallery() {
 
                         <div
                             ref={scrollContainerRef}
-                            className="flex overflow-x-auto space-x-4  cursor-grab no-scrollbar  "
+                            className="flex overflow-x-auto space-x-4 p-8  cursor-grab no-scrollbar  "
                         >
                             {Response.map((image, index) => (
-                                <div key={index} className="flex-shrink-0 relative rounded-lg overflow-hidden  w-64 h-64">
+                                <div key={index} className="flex-shrink-0 relative rounded-lg overflow-hidden gap-8  w-[24rem] h-[24rem]">
 
                                     <Image
                                         src={imageUrlBuilder({ projectId, dataset }).image(image.image).url() || null}
@@ -67,7 +68,7 @@ export default function Gallery() {
                     </div>
                     <button
                         className="absolute right-0 top-1/2 transform -translate-y-1/2  text-gray-800 p-2 rounded-full"
-                        onClick={() => scroll('right')}
+                        onClick={() => scroll('right', Response.length)}
                     >
                         <BiRightArrow size={24} />
                     </button>
