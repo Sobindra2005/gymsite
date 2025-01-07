@@ -1,12 +1,10 @@
-
-import Navbar from "@/components/navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/features";
 import Pricing from "@/components/pricing";
 import Trainer from "@/components/Trainers";
-import Footer from "@/components/footer";
 import Gallery from "@/components/gallery"
 import Location from "@/components/location";
+
 export default function Home() {
   return (
     <div className="">
