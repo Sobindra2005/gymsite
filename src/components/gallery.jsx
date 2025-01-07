@@ -5,13 +5,13 @@ import Image from 'next/image';
 import { client } from '@/sanity/client';
 import imageUrlBuilder from "@sanity/image-url";
 
-const POSTS_QUERY = `*[_type == "gallery"] {image,}`;
+const QUERY = `*[_type == "gallery"] {image,}`;
 
 const options = { next: { revalidate: 30 } };
 const { projectId, dataset } = client.config();
 
 
-export default function Reviews() {
+export default function Gallery() {
     const [Response, setResponse] = useState([])
     const scrollContainerRef = useRef(null);
     const scroll = (direction) => {
@@ -25,7 +25,7 @@ export default function Reviews() {
     };
     useEffect(() => {
         async function Fetchdata() {
-            const response = await client.fetch(POSTS_QUERY, {}, options);
+            const response = await client.fetch(QUERY, {}, options);
             setResponse(response)
         }
         Fetchdata();
@@ -39,22 +39,22 @@ export default function Reviews() {
                 </div>
                 <div className="relative">
                     <button
-                        className="absolute z-50 left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                        className="absolute z-10 left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
                         onClick={() => scroll('left')}
                     >
                         <BiLeftArrow size={24} />
                     </button>
                     <div
                         ref={scrollContainerRef}
-                        className="flex overflow-x-auto space-x-4 no-scrollbar  "
+                        className="flex overflow-x-auto space-x-4  cursor-grab no-scrollbar  "
                     >
                         {Response.map((image, index) => (
-                            <div key={index} className="flex-shrink-0 relative w-64 h-64">
-
+                            <div key={index} className="flex-shrink-0 relative rounded-lg overflow-hidden  w-64 h-64">
+              
                                 <Image
                                     src={imageUrlBuilder({ projectId, dataset }).image(image.image).url() || null}
                                     alt={`Gallery image ${index + 1}`}
-                                    className="w-full h-full object-cover rounded-lg"
+                                    className="w-full h-full object-cover object-center transition-transform ease-in duration-250 hover:scale-110  "
                                     layout="fill"
                                     objectFit="cover"
                                 />

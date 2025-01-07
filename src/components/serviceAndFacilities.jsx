@@ -2,14 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaDumbbell, FaSwimmer, FaSpa, FaRunning, FaAppleAlt, FaOm } from 'react-icons/fa';
 
-const iconMap = {
-    FaDumbbell: FaDumbbell,
-    FaSwimmer: FaSwimmer,
-    FaSpa: FaSpa,
-    FaRunning: FaRunning,
-    FaAppleAlt: FaAppleAlt,
-    FaOm: FaOm,     
-};
+
 
 const sampleData = {
     data: [

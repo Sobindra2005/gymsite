@@ -18,11 +18,14 @@ export default function Navbar() {
                         <span className="ml-2 text-xl font-bold text-gray-900"><span className='text-blue-600'>Fit</span><span className='text-red-600'>Life</span> <span className='text-green-600'>Gym</span> </span>
                     </div>
                     <div className="hidden md:flex space-x-8">
-                        <NavLink href="#home">Home</NavLink>
-                        <NavLink href="#Service&facilities">Service & Facilities</NavLink>
-                        <NavLink href="#pricing">Pricing</NavLink>
-                        <NavLink href="#trainers">Trainers</NavLink>
-                        <NavLink href="#gallery">gallery</NavLink>
+                        <NavLink href="/#home">Home</NavLink>
+                        <NavLink href="/#Service&facilities">Service & Facilities</NavLink>
+                        <NavLink href="/#pricing">Pricing</NavLink>
+                        <NavLink href="/#trainers">Trainers</NavLink>
+                        <NavLink href="/#gallery">gallery</NavLink>
+                        <NavLink href="Amenities">Amenities</NavLink>
+
+
                     </div>
                     <div className="md:hidden">
                         <button
@@ -42,7 +45,7 @@ export default function Navbar() {
                         <MobileNavLink href="#home">Home</MobileNavLink>
                         <MobileNavLink href="#pricing">Pricing</MobileNavLink>
                         <MobileNavLink href="#trainers">Trainers</MobileNavLink>
-                        <MobileNavLink href="#trainers">Reviews</MobileNavLink>
+                        <MobileNavLink href="#gallery">Gallery</MobileNavLink>
                         <MobileNavLink href="#contact">Contact</MobileNavLink>
                     </div>
                 </div>

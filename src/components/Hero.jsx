@@ -1,24 +1,24 @@
-
+import imageUrlBuilder from "@sanity/image-url";
 import Image from 'next/image';
 import React, { Suspense} from 'react';
 import { Button } from '@/components/buttons';
 import { client } from "@/sanity/client";
 
-const POSTS_QUERY = `*[
+const QUERY = `*[
   _type == "HeroSection"
 ]{ Quote , desc , image}`;
-  
+const { projectId, dataset } = client.config();
 const options = { next: { revalidate: 30 } };
          
 const Hero =async  () => {
-    const Response = await client.fetch(POSTS_QUERY, {}, options);
+    const Response = await client.fetch(QUERY, {}, options);
     
         return (
             <Suspense fallback={<div className='w-full h-screen flex items-center justify-center text-black text-2xl '>Loading...</div>}>
                 <section id='home' className="relative h-screen">
                   
                         <Image
-                            src={"https://cdn.sanity.io/images/damct3qr/production/d0b2542476ebc1297f08c3d732e080656c1974b1-300x168.jpg"}
+                            src={`${imageUrlBuilder({ projectId, dataset }).image(Response[0].image).url()}`}
                             alt="FitLife Gym interior with modern equipment and motivated members working out"
                             layout="fill"
                             className='object-cover'

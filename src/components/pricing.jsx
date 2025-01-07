@@ -1,46 +1,11 @@
 "use client"
 
 
-// const planData = [
-//     {
-//         name: 'Basic',
-//         price: '699',
-//         features: [
-//             'Access to gym facilities',
-//             'Basic equipment usage',
-//             'Locker room access',
-//             '2 group classes/month'
-//         ]
-//     },
-//     {
-//         name: 'Pro',
-//         price: '999',
-//         features: [
-//             'All Basic features',
-//             'Unlimited group classes',
-//             'Personal trainer (2x/month)',
-//             'Nutrition consultation'
-//         ],
-//         popular: true
-//     },
-//     {
-//         name: 'Elite',
-//         price: '1599',
-//         features: [
-//             'All Pro features',
-//             'Unlimited personal training',
-//             'Premium equipment access',
-//             'Spa & massage services'
-//         ]
-//     }
-// ];
-
-
 import React, { useEffect, useState } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { client } from "@/sanity/client";
 
-const POSTS_QUERY = `*[_type == "pricing"] | order(price asc) {
+const QUERY = `*[_type == "pricing"] | order(price asc) {
   name,
   price,
   features,
@@ -56,7 +21,7 @@ export default function Pricing() {
 
     useEffect(() => {
         const fetchPricingData = async () => {
-            const response = await client.fetch(POSTS_QUERY, {}, options);
+            const response = await client.fetch(QUERY, {}, options);
             setResponse(response)
         };
 
@@ -64,7 +29,7 @@ export default function Pricing() {
     }, []);
 
     return (
-        <section id="pricing" className={'py-24 bg-gray-50'}>
+        <section id="pricing" className={'py-24 bg-gray-100'}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">Membership Plans</h2>
@@ -78,7 +43,7 @@ export default function Pricing() {
                         <div
                             onClick={() => setCurrentPlan(`${plan.name}`)}
                             key={index}
-                            className={`bg-white rounded-lg p-8 ${currentPlan === plan.name ? 'ring-2 ring-purple-600 shadow-lg' : ''
+                            className={`bg-white border  rounded-lg p-8 ${currentPlan === plan.name ? 'ring-2 ring-purple-600 shadow-lg ' : 'hover:ring-1 hover:ring-purple-300'
                                 }`}
                         >
                             {plan.isPopular && (
@@ -88,7 +53,7 @@ export default function Pricing() {
                             )}
                             <h3 className="text-2xl font-bold text-gray-900 mt-4">{plan.name}</h3>
                             <p className="mt-4">
-                                <span className="text-4xl font-bold text-gray-900">Rs.{plan.price}</span>
+                                <span className="text-4xl font-bold text-gray-900">Rs.{plan.price}</span>\
                                 <span className="text-gray-600">/month</span>
                             </p>
                             <ul className="mt-6 space-y-4">
