@@ -16,7 +16,7 @@ export default function Gallery() {
     const scrollContainerRef = useRef(null);
     const scroll = (direction, length) => {
         if (scrollContainerRef.current) {
-            const totalwidth = scrollContainerRef.current.scrollWidth;
+            const totalwidth =scrollContainerRef.current.scrollWidth;
             const scrollAmount = totalwidth / length;
             scrollContainerRef.current.scrollBy({
                 left: direction === 'left' ? -scrollAmount : scrollAmount,
@@ -24,6 +24,43 @@ export default function Gallery() {
             });
         }
     };
+
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+  
+    console.log(" here is startx ",startX.current)
+    const handleMouseDown = (e) => {
+        isDragging.current = true;
+        startX.current = e.clientX;
+        scrollLeft.current = scrollContainerRef.current.scrollLeft;
+        scrollContainerRef.current.style.cursor = 'grabbing';
+        scrollContainerRef.current.style.userSelect = 'none';
+    };
+
+    const handleMouseLeave = () => {
+        isDragging.current = false;
+        scrollContainerRef.current.style.cursor = 'grab';
+        scrollContainerRef.current.style.removeProperty('user-select');
+    };
+
+    const handleMouseUp = () => {
+        isDragging.current = false;
+        scrollContainerRef.current.style.cursor = 'grab';
+        scrollContainerRef.current.style.removeProperty('user-select');
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging.current) return;
+        e.preventDefault();
+        const x = e.pageX;
+        console.log("here is x ",x)
+        const walk = x - startX.current;
+        console.log("here is walk",walk)
+        scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+    };
+
+
     useEffect(() => {
         async function Fetchdata() {
             const response = await client.fetch(QUERY, {}, options);
@@ -49,6 +86,11 @@ export default function Gallery() {
 
                         <div
                             ref={scrollContainerRef}
+                            onMouseDown={handleMouseDown}
+                            onMouseLeave={handleMouseLeave}
+                            onMouseUp={handleMouseUp}
+                            onMouseMove={handleMouseMove}
+                            style={{ cursor: 'grab', overflow: 'auto' }}
                             className="flex overflow-x-auto space-x-4 p-8  cursor-grab no-scrollbar  "
                         >
                             {Response.map((image, index) => (
@@ -60,6 +102,7 @@ export default function Gallery() {
                                         className="w-full h-full object-cover object-center transition-transform ease-in duration-250 hover:scale-110  "
                                         layout="fill"
                                         objectFit="cover"
+                                        draggable="false"
                                     />
                                 </div>
                             ))}
