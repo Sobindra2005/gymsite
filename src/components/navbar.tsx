@@ -23,7 +23,7 @@ export default function Navbar() {
                         <NavLink href="/#pricing">Pricing</NavLink>
                         <NavLink href="/#trainers">Trainers</NavLink>
                         <NavLink href="/#gallery">gallery</NavLink>
-                        <NavLink href="Amenities">Amenities</NavLink>
+                        <NavLink href="/Amenities">Amenities</NavLink>
 
 
                     </div>
@@ -43,10 +43,11 @@ export default function Navbar() {
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <MobileNavLink href="#home">Home</MobileNavLink>
-                        <MobileNavLink href="#pricing">Pricing</MobileNavLink>
-                        <MobileNavLink href="#trainers">Trainers</MobileNavLink>
-                        <MobileNavLink href="#gallery">Gallery</MobileNavLink>
-                        <MobileNavLink href="#contact">Contact</MobileNavLink>
+                        <MobileNavLink href="/#Service&facilities">Service & Facilities</MobileNavLink>
+                        <MobileNavLink href="/#pricing">Pricing</MobileNavLink>
+                        <MobileNavLink href="/#trainers">Trainers</MobileNavLink>
+                        <MobileNavLink href="/#gallery">gallery</MobileNavLink>
+                        <MobileNavLink href="/Amenities">Amenities</MobileNavLink>
                     </div>
                 </div>
             )}
