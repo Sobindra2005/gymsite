@@ -13,6 +13,7 @@ const { projectId, dataset } = client.config();
 
 export default function Gallery() {
     const [Response, setResponse] = useState([])
+   
     const scrollContainerRef = useRef(null);
     const scroll = (direction, length) => {
         if (scrollContainerRef.current) {

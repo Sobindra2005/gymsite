@@ -10,20 +10,32 @@ const QUERY = `*[_type == "Service"] {
 const { projectId, dataset } = client.config();
 const options = { next: { revalidate: 30 } };
 
+const Odd = (number) => {
+    if (number === 0) return true;
+    if (number % 2 === 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 export default async function AmenitiesPage() {
     const Response = await client.fetch(QUERY, {}, options);
     return (
         <section className="bg-gray-100">
-            <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8 px-4 py-32 text-black">
-                <h1 className="text-3xl font-bold text-center mb-8">Our Amenities</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className=" mx-auto max-w-7xl  sm:px-6 lg:px-8 px-4 py-[6rem] text-black">
+                <h1 className="text-4xl font-bold text-center mb-8">Our Amenities</h1>
+                <div className="grid grid-cols-1  gap-[15rem]">
                     {Response.map((amenity, index) => (
-                        <div key={index} className="bg-white rounded-lg shadow-md p-6 border hover:border-gray-500 flex flex-col items-center text-center">
-                            <div className="flex items-center justify-center mb-4">
-                                <Image src={`${imageUrlBuilder({ projectId, dataset }).image(amenity.icon).url()}`} width={20} height={20} alt="icon" className="h-10 w-10" />
+                        <div key={index} className={`  w-full p-6  flex flex-col items-center  ${Odd(index) ? "md:flex-row" : `md:flex-row-reverse`} items-center text-center`}>
+                            <div className="flex items-center p-20 h-[26rem] justify-center w-1/2 ">
+                                <Image src={`${imageUrlBuilder({ projectId, dataset }).image(amenity.icon).url()}`} width={20} height={20} alt="icon" className="h-full w-full object-over object-center " />
                             </div>
-                            <h2 className="text-xl font-semibold mb-2">{amenity.title}</h2>
-                            <p className="text-gray-600">{amenity.description}</p>
+                            <div className="w-1/2 flex flex-col  h-full items-center bg-gray-200 p-8 justify-center">
+                                <h2 className="text-xl font-semibold mb-2">{amenity.title}</h2>
+                                <p className="text-gray-600">{amenity.description}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
